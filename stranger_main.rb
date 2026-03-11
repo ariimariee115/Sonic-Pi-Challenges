@@ -1,0 +1,19 @@
+
+# Stranger Things Main Theme
+
+use_bpm 160
+use_synth :saw
+strangerNotes = [:c2, :e2, :g2, :b2, :c3, :b2, :g2, :e2]
+i = 0
+
+live_loop :maintheme do
+  with_fx :distortion do
+    8.times do
+      play(strangerNotes[i])
+      sleep 0.5
+      i = i + 1
+      print i
+    end
+    i = 0
+  end
+end
