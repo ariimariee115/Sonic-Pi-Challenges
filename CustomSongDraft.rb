@@ -1,5 +1,19 @@
 #Passionfruit by Drake
+passion = "C:/Users/auria_moore/Documents/Audacity/Passionfruit.wav"
+
 use_bpm 120
+
+highNotes = [:fs5, :cs5, :b4, :fs5, :as4, :as4, :gs4]
+i = 0
+
+lowNotes = [:es3, :b4, :cs4, :cs3, :b4, :cs4,]
+i = 0
+
+highsleepTimes = [1, 5, 2, 1, 4, 1, 2]
+i = 0
+
+lowsleepTimes = [0.75, 0.25, 0.5, 0.5, 0.75, 0.25, 0.5, 0.5]
+i = 0
 
 define :high_notes do
   #total sleep = 16
@@ -41,29 +55,58 @@ define :low_notes do
   end
 end
 
-passion = "C:/Users/auria_moore/Documents/Audacity/Passionfruit.wav"
-
-
-use_synth :dark_ambience
-with_fx :reverb, mix: 0.6, room: 0.9 do
-  play chord(:bb3, :minor), sustain: 4, release: 4, amp: 0.6
-  sleep 4
-  play chord(:gb3, :major), sustain: 4, release: 4, amp: 0.6
-  sleep 4
+define :background_noise do
+  use_synth :dark_ambience
+  with_fx :reverb, mix: 0.6, room: 0.9 do
+    play chord(:bb3, :minor), sustain: 4, release: 4, amp: 4
+    sleep 4
+    play chord(:gb3, :major), sustain: 4, release: 4, amp: 4
+    sleep 4
+    play chord(:ab3, :major), sustain: 4, release: 4, amp: 4
+    sleep 4
+    sample :ambi_choir, rate: 0.3, amp: 1.5, attack: 2
+    sleep 4
+  end
 end
 
-live_loop :high do
-  high_notes
+notes = 21
+high_note = 108
+use_synth :piano
+
+
+
+#-------------------------music starts here-------------------------#
+
+background_noise
+87.times do
+  play high_note
+  sleep 0.125
+  high_note = high_note - 1
 end
 
-sleep 15
+high_notes
+sleep 0.25
+low_notes
 
-live_loop :low do
-  low_notes
-end
-
-sleep 15
 
 sample passion
 
+live_loop :aura do
+  4.times do
+    background_noise
+  end
+  stop
+end
 
+4.times do
+  high_notes
+  sleep 0.25
+  low_notes
+end
+
+play :c2, sustain: 3
+play :e2, sustain: 4
+play :g2, sustain: 2
+play :b2, sustain: 2
+
+stop
