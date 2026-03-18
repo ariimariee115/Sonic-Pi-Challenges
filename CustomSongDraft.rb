@@ -9,10 +9,10 @@ i = 0
 lowNotes = [:es3, :b4, :cs4, :cs3, :b4, :cs4,]
 i = 0
 
-highsleepTimes = [1, 5, 2, 1, 4, 1, 2]
+highSleep = [1, 5, 2, 1, 4, 1, 2]
 i = 0
 
-lowsleepTimes = [0.75, 0.25, 0.5, 0.5, 0.75, 0.25, 0.5, 0.5]
+lowSleep = [0.75, 0.25, 0.5, 0.5, 0.75, 0.25, 0.5, 0.5]
 i = 0
 
 define :high_notes do
@@ -33,7 +33,7 @@ define :high_notes do
   sleep 2
 end
 
-define :low_notes do
+define :low_notes do |changing_note|
   #total sleep = 16
   4.times do
     play :es3, amp: 4
@@ -44,8 +44,8 @@ define :low_notes do
     play :cs4, amp: 4
     sleep 0.5
   end
-  4.times do
-    play :cs3, amp: 4
+  4.times do #:cs3 is the changing note
+    play changing_note, amp: 4
     sleep 0.75
     play :b4, amp: 4
     sleep 0.25
@@ -86,7 +86,7 @@ end
 
 high_notes
 sleep 0.25
-low_notes
+low_notes :cs3
 
 
 sample passion
@@ -101,7 +101,7 @@ end
 4.times do
   high_notes
   sleep 0.25
-  low_notes
+  low_notes :cs3
 end
 
 play :c2, sustain: 3
