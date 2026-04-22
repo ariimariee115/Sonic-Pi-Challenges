@@ -1,0 +1,105 @@
+#Hold On We're Going Home- Drake
+
+use_bpm 100
+use_synth :piano
+
+vocals = "C:/Users/auria_moore/Documents/Audacity/vocallsss.wav"
+girl = "C:/Users/auria_moore/Documents/Audacity/Drake - girl.wav"
+background = "C:/Users/auria_moore/Documents/Audacity/backkkkk(Instrumental).wav"
+fading = "C:/Users/auria_moore/Documents/Audacity/Fading.wav"
+aahs = "C:/Users/auria_moore/Documents/Audacity/ (Acapella).wav"
+intro = "C:/Users/auria_moore/Documents/Audacity/Drake -New.wav"
+
+#need to add the array and parameterized function and fade out- array will go with fade out
+notes = [:e5, :cs5, :b4, :a4, :fs4, :e4, :a4, :b4, :a4, :e5, :cs5, :b4]
+i = 0
+
+sleepy = [0.75, 0.75, 2.5, 0.75, 0.75, 0.5, 0.5, 1, 0.5, 0.75, 0.75, 2.5]
+s = 0
+
+a = 10
+# ---------------- NOTES ---------------- #
+#2 arrays go here one for sleeps one for notes
+
+define :second_notes do
+  play :a4
+  sleep 0.75
+  play :fs4
+  sleep 0.75
+  play :e4
+  sleep 0.5
+  play :a4
+  sleep 0.5
+end
+#14.5 sleep time including first and second notes
+
+#----------- music starts here ---------------- #
+live_loop :continue do
+  sample background
+  sleep sample_duration(background)
+  stop
+end
+
+in_thread do
+  sleep 16.3 #plays before sample background comes to a complete end
+  use_synth :hollow
+  with_fx :mono do
+    #first_notes
+    12.times do
+      play notes[i]
+      sleep(sleepy[s])
+      i = i + 1
+      s = s + 1
+    end
+    second_notes
+  end
+  
+  sample aahs
+  
+  sleep 0.02
+  
+  sample vocals
+  print sample_duration(vocals)
+  
+  sleep 65
+  
+  use_synth :hollow
+  second_notes
+  
+  sleep 10
+  
+  use_synth :hollow
+  second_notes
+  
+  sleep sample_duration(vocals)
+  sample girl
+  
+  sleep sample_duration(girl)
+  sample fading
+  
+  # ---------------- FADE OUT INTRO ---------------- #
+  #sample intro, fade out = load samples into an array and decrease the amp (using a variable) each time you loop
+  
+  3.times do
+    sample intro, amp: a
+    sleep 11
+    a = a - 0.5
+  end
+  
+end
+
+
+=begin
+the parameterized function for my first song because I couldnt find a place in my second song
+define :changenote do|x|
+4.times do
+play x, amp: 4
+sleep 0.75
+play :b4, amp: 4
+sleep 0.25
+sleep 0.5
+play :cs4, amp: 4
+sleep 0.5
+end
+end
+=end
