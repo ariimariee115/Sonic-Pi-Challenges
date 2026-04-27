@@ -17,7 +17,7 @@ i = 0
 sleepy = [0.75, 0.75, 2.5, 0.75, 0.75, 0.5, 0.5, 1, 0.5, 0.75, 0.75, 2.5]
 s = 0
 
-a = 10
+a = 1
 # ---------------- NOTES ---------------- #
 #2 arrays go here one for sleeps one for notes
 
@@ -71,7 +71,7 @@ in_thread do
   use_synth :hollow
   second_notes
   
-  sleep sample_duration(vocals)
+  sleep 15
   sample girl
   
   sleep sample_duration(girl)
